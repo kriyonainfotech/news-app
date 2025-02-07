@@ -1,7 +1,6 @@
 import React from 'react'
 
 const BreackingNews = ({ allNews }) => {
-
     return (
         <>
             <section>
@@ -31,7 +30,7 @@ const BreackingNews = ({ allNews }) => {
 
                                                     {/* Push the button to the bottom */}
                                                     <div className="mt-auto">
-                                                        <a href={news.url} className="btn bg-danger text-white w-100">View</a>
+                                                        <a href={news.url} className="btn bg-danger text-white w-100">Read More</a>
                                                     </div>
                                                 </div>
                                             </div>

@@ -52,7 +52,7 @@ const Cards = () => {
 
                                                 {/* Push the button to the bottom */}
                                                 <div className="mt-auto">
-                                                    <a href={news.url} className="btn bg-danger text-white w-100">View</a>
+                                                    <a href={news.url} className="btn bg-danger text-white w-100">Read more</a>
                                                 </div>
                                             </div>
                                         </div>

@@ -23,10 +23,10 @@ body {
   min-height: 100vh;
 }
 .text-red{
-  color: #ff0000!important;
+  color: #DC3543!important;
 }
 .bg-red{
-  background-color: #ff0000!important;
+  background-color: #DC3543!important;
 }
 .text{
   display: -webkit-box;

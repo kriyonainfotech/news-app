@@ -3,6 +3,7 @@ import { FaBars } from 'react-icons/fa'
 import { FiHome, FiUser } from 'react-icons/fi';
 import { SlBriefcase, SlWallet } from 'react-icons/sl';
 import { Link } from 'react-router-dom'
+import logo from "../../../public/newsl-logo.png"
 
 const Header = () => {
   const [sticky, setSticky] = useState(false);
@@ -22,13 +23,19 @@ const Header = () => {
           >
             <FaBars />
           </button>
-
-          <a className="navbar-brand text-danger">News App</a>
+            <div className="logo">
+              <img src={logo} height={50} alt="" />
+            </div>
+        
         </div>
       </nav>
         <div className="offcanvas offcanvas-start" style={{ width: "300px" }} data-bs-scroll="true" data-bs-backdrop="false" tabIndex={-1} id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
           <div className="offcanvas-header">
-            <h5 className="offcanvas-title text-danger" id="offcanvasScrollingLabel">News APP</h5>
+            
+          <div className="logo">
+    <img src={logo} height={40} alt="" />
+            </div>
+            {/* <h5 className="offcanvas-title text-danger" id="offcanvasScrollingLabel">News APP</h5> */}
             <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" />
           </div>
           <div className="offcanvas-body">
