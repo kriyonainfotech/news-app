@@ -6,15 +6,24 @@
   color-scheme: light dark;
   color: #1a1a1a;
   background-color: #ffffff;
+  --bg-primary : #DC3543 !important;
+  --bg-black : #000!important;
+  --bg-gray  : #f3f0f0;
+ 
 }
+
 
 a {
   font-weight: 500;
   color: #1a1a1a;
-  text-decoration: inherit;
+  text-decoration: none!important;
 }
-ul , li{
+
+ul,
+li {
   list-style: none;
+  padding: 0!important;
+  margin: 0!important;
 }
 
 
@@ -22,26 +31,67 @@ body {
   margin: 0;
   min-height: 100vh;
 }
-.text-red{
-  color: #DC3543!important;
+
+.text-red {
+  color: var(--bg-primary)!important;
 }
-.bg-red{
-  background-color: #DC3543!important;
+
+.bg-red {
+  background-color:  var(--bg-primary)!important;
 }
-.text{
+
+.text {
   display: -webkit-box;
-  -webkit-line-clamp: 4; /* Number of lines to display */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
-}
-.heading{
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* Number of lines to display */
+  -webkit-line-clamp: 4;
+  /* Number of lines to display */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
 }
 
+.heading {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* Number of lines to display */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.category-slider {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
+  scrollbar-width: none;
+  /* Hide scrollbar for Firefox */
+}
+
+.category-slider::-webkit-scrollbar {
+  display: none;
+  /* Hide scrollbar for Chrome, Safari */
+}
+
+.category-btn {
+  flex: 0 0 auto;
+  margin: 0 10px;
+  padding: 8px 16px;
+  border: 1px solid var(--bg-primary) !important;
+  border-radius: 20px;
+  background-color: white;
+  color: var(--bg-primary);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-btn:hover {
+  background-color: var(--bg-primary);
+  color: white;
+}
+.active-link {
+  color: var(--bg-primary) !important;
+  font-weight: bold;
+}
