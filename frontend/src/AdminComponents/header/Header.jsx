@@ -75,15 +75,15 @@ const Header = () => {
     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div className="offcanvas-body">
-        <div className="manu">
+        <div className="manu-sidebar">
             <ul className="list-group list-group-flush p-1">
-                <li className='py-1'>
+                <li className='p-1'>
                     <Link to={"/admin"} className="text-red fs-5">Dashboard</Link>
                 </li>
-                <li className='py-1'>
+                <li className='p-1'>
                     <Link to={"/admin/users"} className="text-red fs-5">Uses</Link>
                 </li>
-                <li className='py-1'>
+                <li className='p-1'>
                     <Link to={"/admin/banner"} className="text-red fs-5">Manage Banner</Link>
                 </li>
             </ul>

@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaBars, FaSearch } from 'react-icons/fa'
 import { FiHome, FiSave, FiSearch, FiUser } from 'react-icons/fi';
 import { SlBriefcase, SlWallet } from 'react-icons/sl';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from "../../../public/newsl-logo.png"
 import { AiFillSave, AiOutlineSave } from 'react-icons/ai';
+import { AuthContext } from '../../contex/AuthContext';
 
 const Header = () => {
+  const {token} = useContext(AuthContext)
+  // const { user } = useContext(UserContext);
+
   const [sticky, setSticky] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation(); // Get current URL path
@@ -72,14 +76,27 @@ const Header = () => {
             <FaSearch size={20}/> 
             </Link>
             </div>
-            {/* Right Section - Sign In Button */}
-            <div className="d-flex">
-              <Link to="/signin">
-                <button className="btn bg-black px-3 py-2 text-white rounded-5" style={{ fontSize: "15px" }}>
-                  Sign In
-                </button>
-              </Link>
+             {/* Right Section - Sign In Button */}
+           
+            {
+              token ? (
+                <div className="d-flex">
+              <div className="profile" style={{width:"50px",height:"50px"}}>
+                <img src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=" className='img-fluid w-100 h-100 rounded-5' />
+              </div>
             </div>
+              ) : (
+                <div className="d-flex">
+                <Link to="/signin">
+                  <button className="btn bg-black px-3 py-2 text-white rounded-5" style={{ fontSize: "15px" }}>
+                    Sign In
+                  </button>
+                </Link>
+              </div>
+              
+              )
+            }
+           
           </div>
         </div>
       </nav>

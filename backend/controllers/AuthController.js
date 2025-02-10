@@ -326,7 +326,8 @@ const UpdateUser = async (req, res) => {
 };
 
 const checkAuth = async (req, res) => {
-  let token = req.headers.authorization
+  try {
+    let token = req.headers.authorization
     ? req.headers.authorization.split(" ")[1] // Extract token after "Bearer"
     : req.cookies.refreshToken;
 
@@ -334,9 +335,19 @@ const checkAuth = async (req, res) => {
     return res.status(401).json({ success: false, message: "No token found" });
   }
   // console.log(token, "token");
+  return res.status(200).send({
+    success: true,
+    message: "Token fetch successfully",
+    token
+  });
 
-
-  res.json({ success: true, token });
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      message: error.message,
+      error: error.message,
+    });
+  }
 };
 
 const updateRole = async (req, res) => {

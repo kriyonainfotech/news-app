@@ -95,3 +95,14 @@ body {
   color: var(--bg-primary) !important;
   font-weight: bold;
 }
+.manu-sidebar ul li {
+  transition: 0.3s ease-in-out;
+}
+
+.manu-sidebar ul li:hover {
+  background-color:var(--bg-primary);
+}
+
+.manu-sidebar ul li:hover a {
+  color: white !important;
+}

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Header from "../Header";
+import Header from "../header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const AddBanner = () => {
+const EditBanner = () => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
 
@@ -85,4 +85,4 @@ const AddBanner = () => {
   );
 };
 
-export default AddBanner;
+export default EditBanner;

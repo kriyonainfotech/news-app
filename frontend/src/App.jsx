@@ -11,16 +11,18 @@ import Headline from './Pages/Headline'
 import Dashboard from './AdminPages/Dashboard'
 import Users from './AdminPages/Users'
 import Banner from './AdminPages/Banner'
-import CreateUser from './AdminComponents/header/Users/CreateUser'
-import EditUser from './AdminComponents/header/Users/EditUser'
-import AddBanner from './AdminComponents/header/Banner/AddBanner'
+import CreateUser from './AdminComponents/Users/CreateUser'
+import EditUser from './AdminComponents/Users/EditUser'
+import AddBanner from './AdminComponents/Banner/AddBanner'
+import { AuthProvider } from './contex/AuthContext'
 
 const App = () => {
   return (
    <>
+   <AuthProvider>
   <Routes>
-    
-    <Route path="/signUp" element={<Register />} />
+  
+          <Route path="/signUp" element={<Register />} />
     <Route path="/signin" element={<Login />} />
     <Route path="/" element={<Home />} />
     <Route path="/news/:id" element={<NewsDetail />} />
@@ -36,8 +38,9 @@ const App = () => {
     <Route path="/admin/banner" element={<Banner />} />
     <Route path="/admin/addBanner" element={<AddBanner />} />
 
-
+  
   </Routes>
+  </AuthProvider>
    </>
   )
 }
