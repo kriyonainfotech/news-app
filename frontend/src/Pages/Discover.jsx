@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import Header from '../Components/header/Header';
-import { FaPlus } from "react-icons/fa";  
+import { FaArrowAltCircleRight, FaArrowLeft, FaPlus } from "react-icons/fa";
 
 const Discover = () => {
     const categories = [
@@ -22,7 +22,7 @@ const Discover = () => {
     ];
 
     const [selectedCategories, setSelectedCategories] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState("in"); 
+    const [selectedCountry, setSelectedCountry] = useState("in");
     const navigate = useNavigate(); // Initialize useNavigate
 
     const toggleCategory = (category) => {
@@ -47,8 +47,11 @@ const Discover = () => {
         <>
             <div>
                 <Header />
-                <div style={{ marginTop: "100px", marginBottom : "100px" }}>
-                    <div className='d-flex justify-content-end pe-3'>
+                <div style={{ marginTop: "100px", marginBottom: "100px" }}>
+                    <div className='d-flex justify-content-between align-items-center px-2 pb-3'>
+                        <button className=" border-0 bg-white text-black" onClick={() => window.history.back()}>
+                            <FaArrowLeft />
+                        </button>
                         <button className='btn bg-red text-white' onClick={handleSearch}>Search</button>
                     </div>
                     <div className='category'>

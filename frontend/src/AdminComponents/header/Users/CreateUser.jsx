@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Header from "../Header";
 const backend_API = import.meta.env.VITE_API_URL;
-const Register = () => {
+const CreateUser = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,6 +11,7 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate()
 
   const [errors, setErrors] = useState({});
   const [loading, setLoding] = useState(false);
@@ -53,7 +55,7 @@ const Register = () => {
         console.log(response.data.message)
         alert(response.data.message)
         // localStorage.setItem("token",JSON.stringify(response.data.token))
-        navigate('/signin')
+        navigate('/admin/users')
       }
     } catch (error) {
       console.error(error)
@@ -64,10 +66,11 @@ const Register = () => {
     }
   }
 
-
-
   return (
-    <div className="container mt-5">
+   <>
+   <div>
+    <Header/>
+    <div className="container" style={{marginTop:"100px",marginBottom:"100px"}}>
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card shadow p-4">
@@ -142,13 +145,14 @@ const Register = () => {
               <button type="submit" className="btn bg-red text-white w-100">
                 Register
               </button>
-              <p className="py-3" >Already Have Registerd ? <Link to={'/signin'} className="text-red">Sign In</Link> </p>
             </form>
           </div>
         </div>
       </div>
     </div>
+   </div>
+   </>
   );
 };
 
-export default Register;
+export default CreateUser;

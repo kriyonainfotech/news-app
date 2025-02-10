@@ -10,7 +10,7 @@ const API_KEY = import.meta.env.VITE_EXPO_PUBLIC_API_KEY;
 
 const Home = () => {
    const [allNews, setAllNews] = useState([]);
-   const [category, setCategory] = useState("business"); // Default category
+   const [category, setCategory] = useState("top"); // Default category
    const [searchQuery, setSearchQuery] = useState("");  // Search query state
    const [loading, setLoading] = useState(true); // Loading state
    const [error, setError] = useState(""); // Error state
@@ -19,7 +19,7 @@ const FetchNews = async () => {
     setLoading(true);
     setError(""); // Reset error before fetching
     try {
-        let apiUrl = `https://newsdata.io/api/1/news?apikey=${API_KEY}&country=in&language=en&category=${category}&removeduplicate=1`;
+        let apiUrl = `https://newsdata.io/api/1/news?apikey=${API_KEY}&country=in&language=en&category=${category}&size=10&removeduplicate=1`;
 
         if (searchQuery.trim() !== "") {
             apiUrl += `&q=${searchQuery}`;

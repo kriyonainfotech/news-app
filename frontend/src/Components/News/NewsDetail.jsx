@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Header from "../header/Header";
+import { FaArrowLeft } from "react-icons/fa";
 const API_KEY = import.meta.env.VITE_EXPO_PUBLIC_API_KEY;
 
 const NewsDetail = () => {
@@ -34,6 +35,9 @@ const NewsDetail = () => {
                 <div className="py-5">
                     <div className="container mt-5">
                         <div className="row">
+                            <button className="d-flex justify-content-start border-0 bg-white pb-3 text-black" onClick={() => window.history.back()}>
+                                <FaArrowLeft />
+                            </button>
                             <div className="co-12 mx-auto d-flex justify-content-center">
                                 <div className="col-md-8 ">
                                     <div className="detaile ">
@@ -41,7 +45,7 @@ const NewsDetail = () => {
                                         <div className="img py-2">
                                             <img src={newsData[0].image_url} alt="News" className="img-fluid" />
                                         </div>
-                                       
+
                                         <p>{newsData[0].description}</p>
                                         <Link to={newsData[0].url} className="btn btn-danger" target="_blank" rel="noopener noreferrer">Read Full Article</Link>
 

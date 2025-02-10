@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Header from "../Header";
 const backend_API = import.meta.env.VITE_API_URL;
-const Register = () => {
+const EditUser = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone : "",
-    password: "",
-    confirmPassword: "",
   });
+  const navigate = useNavigate()
+  const location = useLocation()
+  console.log(location.state,"location");
+  
 
   const [errors, setErrors] = useState({});
   const [loading, setLoding] = useState(false);
@@ -27,10 +30,6 @@ const Register = () => {
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.includes("@")) newErrors.email = "Enter a valid email";
     if (formData.phone.length < 10) newErrors.phone = "Phone must be at least 6 characters";
-    if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
-    if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "Passwords do not match";
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -43,7 +42,11 @@ const Register = () => {
     console.log(formData, "data");
 
     try {
-      const response = await axios.post(`${backend_API}/auth/registerUser`, formData , {
+      const response = await axios.put(`${backend_API}/auth/updateUser` ,
+        {
+          id: location?.state?._id, // Passing the user ID in request body
+          ...formData, // Merging form data
+        }, {
         headers: {
           'Content-Type': 'application/json',
         }   
@@ -53,7 +56,7 @@ const Register = () => {
         console.log(response.data.message)
         alert(response.data.message)
         // localStorage.setItem("token",JSON.stringify(response.data.token))
-        navigate('/signin')
+        navigate('/admin/users')
       }
     } catch (error) {
       console.error(error)
@@ -64,14 +67,25 @@ const Register = () => {
     }
   }
 
+  useEffect(() => {
+    setFormData(
+        {
+            name: location?.state?.name ,
+            email: location?.state?.email ,
+            phone: location?.state?.phone ,
+        }
+    )
 
-
+  },[location.state])
   return (
-    <div className="container mt-5">
+   <>
+   <div>
+    <Header/>
+    <div className="container" style={{marginTop:"100px",marginBottom:"100px"}}>
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card shadow p-4">
-            <h2 className="text-center mb-4">Sign Up</h2>
+            <h2 className="text-center mb-4">EditUser </h2>
             {submitted && <div className="alert alert-success">Registration successful!</div>}
             <form onSubmit={handleSubmit}>
               {/* Name */}
@@ -112,43 +126,18 @@ const Register = () => {
                 {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
               </div>
 
-              {/* Password */}
-              <div className="mb-3">
-                <label className="form-label">Password</label>
-                <input
-                  type="password"
-                  className={`form-control ${errors.password ? "is-invalid" : ""}`}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-                {errors.password && <div className="invalid-feedback">{errors.password}</div>}
-              </div>
-
-              {/* Confirm Password */}
-              <div className="mb-3">
-                <label className="form-label">Confirm Password</label>
-                <input
-                  type="password"
-                  className={`form-control ${errors.confirmPassword ? "is-invalid" : ""}`}
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                />
-                {errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword}</div>}
-              </div>
-
               {/* Submit Button */}
               <button type="submit" className="btn bg-red text-white w-100">
                 Register
               </button>
-              <p className="py-3" >Already Have Registerd ? <Link to={'/signin'} className="text-red">Sign In</Link> </p>
             </form>
           </div>
         </div>
       </div>
     </div>
+   </div>
+   </>
   );
 };
 
-export default Register;
+export default EditUser;

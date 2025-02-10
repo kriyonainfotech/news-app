@@ -8,6 +8,12 @@ import Discover from './Pages/Discover'
 import DiscoverResults from './Pages/DiscoverResults'
 import Newsleter from './Pages/Newsleter'
 import Headline from './Pages/Headline'
+import Dashboard from './AdminPages/Dashboard'
+import Users from './AdminPages/Users'
+import Banner from './AdminPages/Banner'
+import CreateUser from './AdminComponents/header/Users/CreateUser'
+import EditUser from './AdminComponents/header/Users/EditUser'
+import AddBanner from './AdminComponents/header/Banner/AddBanner'
 
 const App = () => {
   return (
@@ -22,6 +28,15 @@ const App = () => {
     <Route path="/news" element={<DiscoverResults />} />
     <Route path="/newsletter" element={<Newsleter />} />
     <Route path="/headline" element={<Headline />} />
+
+    <Route path="/admin" element={<Dashboard />} />
+    <Route path="/admin/users" element={<Users />} />
+    <Route path="/admin/createUser" element={<CreateUser />} />
+    <Route path="/admin/editUser" element={<EditUser />} />
+    <Route path="/admin/banner" element={<Banner />} />
+    <Route path="/admin/addBanner" element={<AddBanner />} />
+
+
   </Routes>
    </>
   )

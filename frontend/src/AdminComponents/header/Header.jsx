@@ -26,61 +26,22 @@ const Header = () => {
       <div className=''>
       <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top shadow px-2">
         <div className="container-fluid">
-          {/* Logo */}
+          <div className="col-12 d-flex align-items-center">
+          <button 
+            className="btn d-flex" 
+            type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" 
+          >
+            <FaBars />
+          </button>
+            {/* Logo */}
           <div className="logo">
             <Link to={"/"}>
             <h3 className="text-red">Gujrat News</h3>
             </Link>
           </div>
-
-          {/* Mobile Menu Toggle Button */}
-          <button 
-            className="btn d-flex d-md-none" 
-            type="button" 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <FaBars />
-          </button>
-
-          {/* Navbar Items (Collapse for Mobile) */}
-          <div className={`collapse navbar-collapse px-3 ${isMobileMenuOpen ? 'show' : ''}`}>
- 
-            {/* Center Menu */}
-            <ul className="navbar-nav me-auto d-flex gap-3">
-              <li className="nav-item">
-                <Link to="/headline" 
-                  className={`nav-link ${location.pathname === '/headline' ? 'active-link' : ''}`}>
-                  Headline
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/newsletter" 
-                  className={`nav-link ${location.pathname === '/newsletter' ? 'active-link' : ''}`}>
-                  Newsletter
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/admin" 
-                  className={`nav-link ${location.pathname === '/admin' ? 'active-link' : ''}`}>
-                  Admin
-                </Link>
-              </li>
-             
-            </ul>
-            <div className='d-none d-md-flex '>
-            <Link to={"/search"} className='p-3 text-red'>
-            <FaSearch size={20}/> 
-            </Link>
-            </div>
-            {/* Right Section - Sign In Button */}
-            <div className="d-flex">
-              <Link to="/signin">
-                <button className="btn bg-black px-3 py-2 text-white rounded-5" style={{ fontSize: "15px" }}>
-                  Sign In
-                </button>
-              </Link>
-            </div>
           </div>
+
+         
         </div>
       </nav>
 
@@ -108,6 +69,27 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      <div className="offcanvas offcanvas-start" style={{width :"250px"}} data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+  <div className="offcanvas-header">
+    <h3 className="offcanvas-title text-red" id="offcanvasScrollingLabel">Gujrat News</h3>
+    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div className="offcanvas-body">
+        <div className="manu">
+            <ul className="list-group list-group-flush p-1">
+                <li className='py-1'>
+                    <Link to={"/admin"} className="text-red fs-5">Dashboard</Link>
+                </li>
+                <li className='py-1'>
+                    <Link to={"/admin/users"} className="text-red fs-5">Uses</Link>
+                </li>
+                <li className='py-1'>
+                    <Link to={"/admin/banner"} className="text-red fs-5">Manage Banner</Link>
+                </li>
+            </ul>
+        </div>
+  </div>
+</div>
     </>
   )
 }

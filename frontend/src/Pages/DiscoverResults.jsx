@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../Components/header/Header';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const API_KEY = import.meta.env.VITE_EXPO_PUBLIC_API_KEY;
 
@@ -23,7 +24,7 @@ const DiscoverResults = () => {
 
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                
+
                 if (data.results) {
                     const filteredNews = data.results.filter(item => item.image_url !== null);
                     setNews(filteredNews);
@@ -39,8 +40,11 @@ const DiscoverResults = () => {
     return (
         <>
             <Header />
-            <div className="container" style={{marginTop :"100px"}}>
-                <h2>News Results</h2>
+            <div className="container" style={{ marginTop: "100px" }}>
+                <button className=" border-0 bg-white pb-3 text-black" onClick={() => window.history.back()}>
+                    <FaArrowLeft />
+                </button>
+                <h2>News </h2>
                 <div className="row">
                     {news.map((item, index) => (
                         <div key={index} className="col-md-4 mb-4">
