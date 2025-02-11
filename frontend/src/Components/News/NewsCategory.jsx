@@ -14,6 +14,10 @@ const NewsCategory = ({ setCategory }) => {
                     <div className="row">
                         <div className="col-12">
                             <div className="category-slider">
+                             {/* All Button - Reset Category */}
+                             <button className="category-btn" onClick={() => setCategory("")}>
+                                All
+                            </button>
                                 {categories.map((cat, index) => (
                                     <button key={index} className="category-btn" onClick={() => setCategory(cat)}>
                                         {cat}

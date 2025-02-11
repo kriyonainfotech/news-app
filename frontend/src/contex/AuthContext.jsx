@@ -13,10 +13,6 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null); // User data state
     const [loading, setLoading] = useState(true); // Loading state
     const [error, setError] = useState(null); // Error state for better debugging
-    
-    // const token = JSON.parse(localStorage.getItem('token'));
-// console.log(token);
-
     useEffect(() => {
         const getAuth = async () => {
             try {
@@ -43,10 +39,35 @@ export const AuthProvider = ({ children }) => {
         };
 
         getAuth();
+        const getUser = async () => {
+            try {
+                setLoading(true); // Ensure loading is set to true before fetching
+                const response = await axios.get(`${backend_API}/auth/getUser`, {
+                    withCredentials: true, // Include cookies in the request
+                });
+
+                if (response.status === 200) {
+                    setUser(response.data.user); // Set user data
+                    console.log("Fetched user data:", response.data, user);
+                }
+            } catch (err) {
+                console.error("Error fetching user:", err);
+                setError(err);
+
+                if (err.response?.status === 403) {
+                    console.error("Invalid or expired token. Redirecting to login...");
+                    window.location.href = "/signin"; // Redirect to login page
+                }
+            } finally {
+                setLoading(false); // Set loading to false after fetch is complete
+            }
+        };
+
+        getUser();
     }, []);
 
     return (
-        <AuthContext.Provider value={{ token, setToken, loading, error }}>
+        <AuthContext.Provider value={{ token, setToken, user, setUser, loading, error }}>
             {!loading ? children : <></>} {/* Loading fallback */}
         </AuthContext.Provider>
     );

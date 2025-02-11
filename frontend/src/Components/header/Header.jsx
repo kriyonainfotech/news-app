@@ -6,9 +6,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from "../../../public/newsl-logo.png"
 import { AiFillSave, AiOutlineSave } from 'react-icons/ai';
 import { AuthContext } from '../../contex/AuthContext';
+import ProfileMenu from './ProfileMenu';
 
 const Header = () => {
-  const {token} = useContext(AuthContext)
+  const { token, user } = useContext(AuthContext)
   // const { user } = useContext(UserContext);
 
   const [sticky, setSticky] = useState(false);
@@ -28,78 +29,90 @@ const Header = () => {
   return (
     <>
       <div className=''>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top shadow px-2">
-        <div className="container-fluid">
-          {/* Logo */}
-          <div className="logo">
-            <Link to={"/"}>
-            <h3 className="text-red">Gujrat News</h3>
-            </Link>
-          </div>
-
-          {/* Mobile Menu Toggle Button */}
-          <button 
-            className="btn d-flex d-md-none" 
-            type="button" 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <FaBars />
-          </button>
-
-          {/* Navbar Items (Collapse for Mobile) */}
-          <div className={`collapse navbar-collapse px-3 ${isMobileMenuOpen ? 'show' : ''}`}>
- 
-            {/* Center Menu */}
-            <ul className="navbar-nav me-auto d-flex gap-3">
-              <li className="nav-item">
-                <Link to="/headline" 
-                  className={`nav-link ${location.pathname === '/headline' ? 'active-link' : ''}`}>
-                  Headline
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/newsletter" 
-                  className={`nav-link ${location.pathname === '/newsletter' ? 'active-link' : ''}`}>
-                  Newsletter
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/admin" 
-                  className={`nav-link ${location.pathname === '/admin' ? 'active-link' : ''}`}>
-                  Admin
-                </Link>
-              </li>
-             
-            </ul>
-            <div className='d-none d-md-flex '>
-            <Link to={"/search"} className='p-3 text-red'>
-            <FaSearch size={20}/> 
-            </Link>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top shadow px-2">
+          <div className="container-fluid">
+            {/* Logo */}
+            <div className="logo">
+              <Link to={"/"}>
+                <h3 className="text-red">Gujrat News</h3>
+              </Link>
             </div>
-             {/* Right Section - Sign In Button */}
-           
-            {
-              token ? (
-                <div className="d-flex">
-              <div className="profile" style={{width:"50px",height:"50px"}}>
-                <img src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=" className='img-fluid w-100 h-100 rounded-5' />
-              </div>
-            </div>
-              ) : (
-                <div className="d-flex">
-                <Link to="/signin">
-                  <button className="btn bg-black px-3 py-2 text-white rounded-5" style={{ fontSize: "15px" }}>
-                    Sign In
-                  </button>
+
+            {/* Mobile Menu Toggle Button */}
+            <button
+              className="btn d-flex d-md-none"
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <FaBars />
+            </button>
+
+            {/* Navbar Items (Collapse for Mobile) */}
+            <div className={`collapse navbar-collapse px-3 ${isMobileMenuOpen ? 'show' : ''}`}>
+
+              {/* Center Menu */}
+              <ul className="navbar-nav me-auto d-flex gap-3">
+                <li className="nav-item">
+                  <Link to="/headline"
+                    className={`nav-link ${location.pathname === '/headline' ? 'active-link' : ''}`}>
+                    Headline
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/newsletter"
+                    className={`nav-link ${location.pathname === '/newsletter' ? 'active-link' : ''}`}>
+                    Newsletter
+                  </Link>
+                </li>
+                {
+                  user?.role == "admin" ? (
+                    <li className="nav-item">
+                  <Link to="/admin"
+                    className={`nav-link ${location.pathname === '/admin' ? 'active-link' : ''}`}>
+                    Admin
+                  </Link>
+                </li>
+
+                  ) : (
+                    <></>
+                  )
+                }
+{/* 
+                <li className="nav-item">
+                  <Link to="/admin"
+                    className={`nav-link ${location.pathname === '/admin' ? 'active-link' : ''}`}>
+                    Admin
+                  </Link>
+                </li> */}
+
+              </ul>
+              <div className='d-none d-md-flex '>
+                <Link to={"/search"} className='p-3 text-red'>
+                  <FaSearch size={20} />
                 </Link>
               </div>
-              
-              )
-            }
-           
+              {/* Right Section - Sign In Button */}
+
+              {
+                token ? (
+                  <div className="d-flex">
+                    <ProfileMenu />
+                  </div>
+                ) : (
+                  <div className="d-flex">
+                    <Link to="/signin">
+                      <button className="btn bg-black px-3 py-2 text-white rounded-5" style={{ fontSize: "15px" }}>
+                        Sign In
+                      </button>
+                    </Link>
+                  </div>
+
+                )
+              }
+
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
 
       </div>
       {/* nave bottom  */}

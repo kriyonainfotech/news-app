@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 const backend_API = import.meta.env.VITE_API_URL;
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [passwordVisible, setPasswordVisible] = useState(false);
- const [loading, setLoding] = useState(false);
+  const [loading, setLoding] = useState(false);
+  const navigate = useNavigate()
 
   // Handle input change
   const handleChange = (e) => {
@@ -24,32 +25,33 @@ const Login = () => {
   };
 
   // Handle form submission
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
     setLoding(true)
     try {
-      const response = await axios.post(`${backend_API}/auth/loginUser`, formData,{
+      const response = await axios.post(`${backend_API}/auth/loginUser`, formData, {
         headers: {
           'Content-Type': 'application/json',
-          },
-          withCredentials: true
-        })
-        if (response.status === 200) {
-          console.log(response.data)
-          console.log(response.data.message)
-          alert(response.data.message)
-          // localStorage.setItem("token",JSON.stringify(response.data.token)
-          // navigate('/')
-        }
-      } catch (error) {
-        console.error(error)
-        console.log(error.response.data.message);
-        alert(error.response.data.message)
-      } finally {
-        setLoding(false)
+        },
+        withCredentials: true
+      })
+      if (response.status === 200) {
+        console.log(response.data)
+        console.log(response.data.message)
+        alert(response.data.message)
+        // localStorage.setItem("token",JSON.stringify(response.data.token)
+        navigate('/')
+        window.location.reload()
       }
-    
+    } catch (error) {
+      console.error(error)
+      console.log(error.response.data.message);
+      alert(error.response.data.message)
+    } finally {
+      setLoding(false)
+    }
+
 
   };
 
@@ -89,7 +91,7 @@ const Login = () => {
                     className="btn btn-outline-secondary"
                     onClick={() => setPasswordVisible(!passwordVisible)}
                   >
-                    {passwordVisible ? <FaEye/> : <FaEyeSlash/>}
+                    {passwordVisible ? <FaEye /> : <FaEyeSlash />}
                   </button>
                 </div>
                 {errors.password && <div className="invalid-feedback d-block">{errors.password}</div>}
@@ -100,7 +102,7 @@ const Login = () => {
                 Login
               </button>
               <p className="py-3" >Don't have an Account ? <Link to={'/signUp'} className="text-red">Sign Up</Link> </p>
-           
+
             </form>
           </div>
         </div>

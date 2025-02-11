@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 const backend_API = import.meta.env.VITE_API_URL;
 const Register = () => {
@@ -15,7 +15,7 @@ const Register = () => {
   const [loading, setLoding] = useState(false);
 
   const [submitted, setSubmitted] = useState(false);
-
+const navigate = useNavigate()
   // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
