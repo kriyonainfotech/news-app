@@ -106,3 +106,7 @@ body {
 .manu-sidebar ul li:hover a {
   color: white !important;
 }
+
+.footer-cat  li:hover a {
+  color: var(--bg-primary) !important;
+}

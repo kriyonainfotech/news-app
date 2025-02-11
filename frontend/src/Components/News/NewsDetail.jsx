@@ -2,64 +2,84 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Header from "../header/Header";
 import { FaArrowLeft } from "react-icons/fa";
-const API_KEY = import.meta.env.VITE_EXPO_PUBLIC_API_KEY;
+import Footer from "../footer/Footer";
+
+const API_KEYS = [
+  import.meta.env.VITE_API_KEY_1,
+  import.meta.env.VITE_API_KEY_2,
+  import.meta.env.VITE_API_KEY_3,
+];
 
 const NewsDetail = () => {
-    const { id } = useParams();  // Get news ID from URL
-    const [newsData, setNewsData] = useState(null);
+  const { id } = useParams();  
+  const [newsData, setNewsData] = useState(null);
+  const [apiKeyIndex, setApiKeyIndex] = useState(0);  // Track which API key to use
 
-    useEffect(() => {
-        // Fetch particular news based on ID (mock API response)
+  useEffect(() => {
+    fetchNewsDetails(apiKeyIndex);
+  }, [id, apiKeyIndex]);
 
+  const fetchNewsDetails = async (index) => {
+    if (index >= API_KEYS.length) {
+      console.error("All API keys have failed.");
+      return;
+    }
 
-        fetchNewsDetails();
-    }, [id]);
+    try {
+      const response = await fetch(`https://newsdata.io/api/1/news?apikey=${API_KEYS[index]}&id=${id}`);
+      const data = await response.json();
 
-    const fetchNewsDetails = async () => {
-        try {
-            const response = await fetch(`https://newsdata.io/api/1/news?apikey=${API_KEY}&id=${id}`);
-            const data = await response.json();
+      if (data.status === "error") {
+        console.warn(`API Key ${API_KEYS[index]} failed, trying next...`);
+        setApiKeyIndex(index + 1);  // Try next API key
+      } else {
+        setNewsData(data.results);
+      }
+    } catch (error) {
+      console.error("Error fetching news details:", error);
+      setApiKeyIndex(index + 1);  // Try next API key on network error
+    }
+  };
 
-            setNewsData(data.results);
-            console.log(data.results);
-        } catch (error) {
-            console.error("Error fetching news details:", error);
-        }
-    };
-    if (!newsData) return <h2>Loading...</h2>;
+  if (!newsData) return <h2>Loading...</h2>;
 
-    return (
-        <>
-            <div>
-                <Header />
-                <div className="py-5">
-                    <div className="container mt-5">
-                        <div className="row">
-                            <button className="d-flex justify-content-start border-0 bg-white pb-3 text-black" onClick={() => window.history.back()}>
-                                <FaArrowLeft />
-                            </button>
-                            <div className="co-12 mx-auto d-flex justify-content-center">
-                                <div className="col-md-8 ">
-                                    <div className="detaile ">
-                                        <h2>{newsData[0].title}</h2>
-                                        <div className="img py-2">
-                                            <img src={newsData[0].image_url} alt="News" className="img-fluid" />
-                                        </div>
-
-                                        <p>{newsData[0].description}</p>
-                                        <Link to={newsData[0].url} className="btn btn-danger" target="_blank" rel="noopener noreferrer">Read Full Article</Link>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  return (
+    <>
+      <Header />
+      <div className="py-5">
+        <div className="container mt-5">
+          <div className="row">
+            <button 
+              className="d-flex justify-content-start border-0 bg-white pb-3 text-black" 
+              onClick={() => window.history.back()}
+            >
+              <FaArrowLeft />
+            </button>
+            <div className="co-12 mx-auto d-flex justify-content-center">
+              <div className="col-md-8">
+                <div className="detail">
+                  <h2>{newsData[0]?.title}</h2>
+                  <div className="img py-2">
+                    <img src={newsData[0]?.image_url} alt="News" className="img-fluid" />
+                  </div>
+                  <p>{newsData[0]?.description}</p>
+                  <Link 
+                    to={newsData[0]?.url} 
+                    className="btn btn-danger" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    Read Full Article
+                  </Link>
                 </div>
+              </div>
             </div>
-
-        </>
-
-    );
+          </div>
+        </div>
+      </div>
+      <Footer/>
+    </>
+  );
 };
 
 export default NewsDetail;

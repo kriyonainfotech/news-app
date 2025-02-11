@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import Header from '../Components/header/Header';
 import { FaArrowAltCircleRight, FaArrowLeft, FaPlus } from "react-icons/fa";
+import Footer from '../Components/footer/Footer';
 
 const Discover = () => {
     const categories = [
@@ -88,6 +89,7 @@ const Discover = () => {
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         </>
     );

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { FaBars, FaSearch } from 'react-icons/fa'
+import { FaBars, FaSearch, FaSign, FaSignInAlt, FaSignOutAlt, FaWonSign } from 'react-icons/fa'
 import { FiHome, FiSave, FiSearch, FiUser } from 'react-icons/fi';
 import { SlBriefcase, SlWallet } from 'react-icons/sl';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -7,8 +7,9 @@ import logo from "../../../public/newsl-logo.png"
 import { AiFillSave, AiOutlineSave } from 'react-icons/ai';
 import { AuthContext } from '../../contex/AuthContext';
 import ProfileMenu from './ProfileMenu';
+import NewsLenguage from '../News/NewsLenguage';
 
-const Header = () => {
+const Header = ({setLanguage}) => {
   const { token, user } = useContext(AuthContext)
   // const { user } = useContext(UserContext);
 
@@ -21,7 +22,7 @@ const Header = () => {
     { title: 'Home', link: '/', icon: <FiHome />, action: () => navigate('/') },
     { title: 'Discover', link: '/search', icon: <FiSearch />, action: () => navigate('/search') },
 
-    { title: 'Save', link: '/save', icon: <AiOutlineSave />, action: () => navigate('/work') },
+    // { title: 'Save', link: '/save', icon: <AiOutlineSave />, action: () => navigate('/work') },
     { title: 'Profile', link: '/profile', icon: <FiUser />, action: () => navigate('/profile') },
   ];
 
@@ -31,75 +32,30 @@ const Header = () => {
       <div className=''>
         <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top shadow px-2">
           <div className="container-fluid">
-            {/* Logo */}
-            <div className="logo">
+           <div className='w-100 d-flex justify-content-between align-items-center'>
+             {/* Logo */}
+             <div className="logo">
               <Link to={"/"}>
                 <h3 className="text-red">Gujrat News</h3>
               </Link>
             </div>
-
-            {/* Mobile Menu Toggle Button */}
-            <button
-              className="btn d-flex d-md-none"
-              type="button"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <FaBars />
-            </button>
-
-            {/* Navbar Items (Collapse for Mobile) */}
-            <div className={`collapse navbar-collapse px-3 ${isMobileMenuOpen ? 'show' : ''}`}>
-
-              {/* Center Menu */}
-              <ul className="navbar-nav me-auto d-flex gap-3">
-                <li className="nav-item">
-                  <Link to="/headline"
-                    className={`nav-link ${location.pathname === '/headline' ? 'active-link' : ''}`}>
-                    Headline
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/newsletter"
-                    className={`nav-link ${location.pathname === '/newsletter' ? 'active-link' : ''}`}>
-                    Newsletter
-                  </Link>
-                </li>
-                {
-                  user?.role == "admin" ? (
-                    <li className="nav-item">
-                  <Link to="/admin"
-                    className={`nav-link ${location.pathname === '/admin' ? 'active-link' : ''}`}>
-                    Admin
-                  </Link>
-                </li>
-
-                  ) : (
-                    <></>
-                  )
-                }
-{/* 
-                <li className="nav-item">
-                  <Link to="/admin"
-                    className={`nav-link ${location.pathname === '/admin' ? 'active-link' : ''}`}>
-                    Admin
-                  </Link>
-                </li> */}
-
-              </ul>
-              <div className='d-none d-md-flex '>
-                <Link to={"/search"} className='p-3 text-red'>
+       
+            
+           <div className='d-flex justify-content-end align-items-center' >
+           <div className='d-none d-md-flex'>
+                <Link to={"/search"} className='px-3  text-red'>
                   <FaSearch size={20} />
                 </Link>
               </div>
-              {/* Right Section - Sign In Button */}
-
-              {
+           <NewsLenguage setLanguage={setLanguage} />
+         
+            {
                 token ? (
-                  <div className="d-flex">
+                  <div className="d-md-flex d-none">
                     <ProfileMenu />
                   </div>
                 ) : (
-                  <div className="d-flex">
+                  <div className="d-md-flex d-none ">
                     <Link to="/signin">
                       <button className="btn bg-black px-3 py-2 text-white rounded-5" style={{ fontSize: "15px" }}>
                         Sign In
@@ -109,8 +65,8 @@ const Header = () => {
 
                 )
               }
-
-            </div>
+                </div>
+           </div>
           </div>
         </nav>
 

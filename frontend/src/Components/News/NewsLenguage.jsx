@@ -36,7 +36,7 @@ const NewsLenguage = ({ setLanguage }) => {
     return (
 
 
-        <div className="col-md-8 d-flex justify-content-end align-items-center p-3">
+        <div className="d-flex justify-content-start align-items-center px-2">
 
             {/* Language Dropdown */}
             <select className="form-select w-auto" onChange={(e) => setLanguage(e.target.value)}>

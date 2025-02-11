@@ -16,6 +16,7 @@ import EditUser from './AdminComponents/Users/EditUser'
 import AddBanner from './AdminComponents/Banner/AddBanner'
 import { AuthProvider } from './contex/AuthContext'
 import EditBanner from './AdminComponents/Banner/EditBanner'
+import Profile from './Pages/Profile'
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
     <Route path="/news" element={<DiscoverResults />} />
     <Route path="/newsletter" element={<Newsleter />} />
     <Route path="/headline" element={<Headline />} />
+    <Route path="/profile" element={<Profile />} />
 
     <Route path="/admin" element={<Dashboard />} />
     <Route path="/admin/users" element={<Users />} />
