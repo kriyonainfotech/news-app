@@ -111,6 +111,7 @@ const Home = () => {
 
                     {/* Show News Only If No Error & No Loading */}
                     {!loading && !error && <BreackingNews allNews={allNews} />}
+                    {/* <Cards/> */}
                 </div>
                 <Footer/>
             </div>
