@@ -8,7 +8,7 @@ import Loading from '../Components/Loading';
 import NewsLenguage from '../Components/News/NewsLenguage';
 import Footer from '../Components/footer/Footer';
 
-const API_KEY = import.meta.env.VITE_EXPO_PUBLIC_API_KEY;
+// const API_KEY = import.meta.env.VITE_EXPO_PUBLIC_API_KEY;
 const API_KEYS = [
     import.meta.env.VITE_API_KEY_1,
     import.meta.env.VITE_API_KEY_2
@@ -44,8 +44,8 @@ const Home = () => {
                 console.log(data, "data home page");
     
                 if (data.status === "error") {
-                    if (data.message.includes("credit limit")) {
-                        console.warn(`API Key ${API_KEYS[keyIndex]} exhausted. Switching to next key...`);
+                    if (data.results.message = "You exceeded your assigned API credits, please check your plan and billing details.") {
+                        console.log(`API Key ${API_KEYS[keyIndex]} exhausted. Switching to next key...`);
                         keyIndex++;
     
                         if (keyIndex < API_KEYS.length) {
