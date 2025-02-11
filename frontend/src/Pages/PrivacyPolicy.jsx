@@ -10,9 +10,9 @@ const PrivacyPolicy = () => {
     <div className="container " style={{marginTop:"80px"}}>
         <div className="row">
             <div className="col-md-12 py-3 fs-5">
-               
-                  <div className=''>
-                  <h2>Privacy Policy</h2>
+            <h2 className='py-2'>Privacy Policy</h2>
+                  <div className='py-3'>
+                 
                     <p>GujaratSamachar.com (“site”, “website”) provides various services including websites, apps, newsletters, and content delivery via any mobile or internet connected device (collectively referred to as the "Services"). This Privacy Policy outlines how the Company processes information collected from or provided by users.</p>
                     <p className='py-3'>
                     This Privacy Policy is an integral part of the Terms of Use governing the Services. If a capitalised term used in this Policy is undefined, it will have the same meaning as attributed to it in the Terms of Use. The Company values the privacy of its users and is committed to safeguarding it in all aspects.

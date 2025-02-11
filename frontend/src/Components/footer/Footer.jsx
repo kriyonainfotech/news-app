@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const categories = [
@@ -75,6 +76,7 @@ const Footer = () => {
             <p><i className="fas fa-phone-alt me-2"></i> +91 98765 43210</p>
             <p><i className="fas fa-envelope me-2"></i> contact@gujaratnews.com</p>
             <p><i className="fas fa-map-marker-alt me-2"></i> Ahmedabad, Gujarat, India</p>
+            <Link to={"/privecyPolicy"}>Privacy Policy</Link>
               {/* Social Media Links */}
         <div className="my-3">
           <a href="#" className="text-red fs-5 me-3"><i className="fab fa-facebook-f"></i></a>
