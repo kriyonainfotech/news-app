@@ -3,6 +3,7 @@ import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import { AuthContext } from '../contex/AuthContext';
 import Header from '../Components/header/Header';
 import Footer from '../Components/footer/Footer';
+import Logout from '../Components/Logout';
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
@@ -25,13 +26,7 @@ const Profile = () => {
                         
                         <div className='col-12 col-md-12'>
                             <div className='d-flex justify-content-end'>
-                                <button
-                                    className=" border-0 bg-red text-white p-2 rounded-2"
-                                    style={{ borderRadius: '10px' }}
-                                // onClick={onLogout}
-                                >
-                                    <FaSignOutAlt className="" /> Logout
-                                </button>
+                               <Logout/>
                             </div>
                         </div>
 
