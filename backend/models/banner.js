@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bannerSchema = new mongoose.Schema({
-    bannerName : {
+    title : {
         type : String,
         required : true
     },

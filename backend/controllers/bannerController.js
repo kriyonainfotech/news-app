@@ -13,18 +13,16 @@ const getPublicIdFromUrl = (url) => {
 
 const addbanner = async (req, res) => {
   try {
-    // const imageUrl = req.file.path;
-    const imageUrl = req.body.imageUrl;
+    const imageUrl = req.file.path; // or req.file.path if using multer
+    const { title } = req.body; // Fix here
 
-    const { bannerName } = req.boy
+    console.log(imageUrl, "image banner");
 
-    // Check for an existing banner for the user
-    console.log(imageUrl, "image bannrer");
     // Create and save a new Banner instance
-    const newBanner = new Banner({bannerName, imageUrl });
+    const newBanner = new Banner({ title, imageUrl });
     await newBanner.save();
 
-    return res.status(201).send({
+    return res.status(200).send({
       success: true,
       message: "Banner added successfully",
       banner: newBanner,
@@ -38,6 +36,7 @@ const addbanner = async (req, res) => {
     });
   }
 };
+
 const getAllBanners = async (req, res) => {
   try {
 
@@ -60,35 +59,42 @@ const getAllBanners = async (req, res) => {
 
 const updateBanner = async (req, res) => {
   try {
-    const { bannerId } = req.body;
+    const { bannerId, title } = req.body;
+    console.log(req.body,"update");
+    // Find the existing banner
     const banner = await Banner.findById(bannerId);
     if (!banner) {
-      return res
-        .status(404)
-        .json({ success: false, message: "banner not found" });
+      return res.status(404).json({ success: false, message: "Banner not found" });
     }
+
+    // Handle image update if a new file is uploaded
     let imageUrl = banner.imageUrl;
     if (req.file) {
       if (imageUrl) {
         const publicId = getPublicIdFromUrl(imageUrl);
         if (publicId) {
-          const result = await cloudinary.uploader.destroy(publicId);
-        } else {
-          console.log("Could not extract publicId from URL:", imageUrl);
+          try {
+            await cloudinary.uploader.destroy(publicId);
+          } catch (err) {
+            console.error("Error deleting old image from Cloudinary:", err);
+          }
         }
       }
       imageUrl = req.file.path;
     }
+
+    // Update the banner fields
+    banner.title = title || banner.title;
     banner.imageUrl = imageUrl;
     await banner.save();
-    res
-      .status(200)
-      .json({ success: true, message: "banner updated successfully", banner });
+
+    res.status(200).json({ success: true, message: "Banner updated successfully", banner });
   } catch (error) {
-    console.error("Error in bannerupdate:", error);
-    res.status(500).json({ success: false, message: "Server error", error });
+    console.error("Error updating banner:", error);
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
   }
 };
+
 
 const deleteBanner = async (req, res) => {
   try {

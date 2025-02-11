@@ -1,13 +1,69 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../AdminComponents/header/Header'
 import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios";
 
+const backend_API = import.meta.env.VITE_API_URL;
 const Banner = () => {
+   const [banners, setBanners] = useState([]);
+    const [loading, setLoding] = useState(false);
+  
   const navigate = useNavigate()
+
   const users = [
     { id: 1, name: "Banner Name", image: "banner Image" },
 
   ];
+
+  const GetBanners = async() => {
+    setLoding(true);
+    try {
+      const response = await axios.get(`${backend_API}/banner/getAllBanners`, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      if (response.status === 200) {
+        console.log(response.data,"banner")
+        setBanners(response.data.banners)
+      }
+    } catch (error) {
+      console.error(error)
+      console.log(error.response.data.message);
+      alert(error.response.data.message)
+    } finally {
+      setLoding(false)
+    }
+  }
+  useEffect(() => {
+    GetBanners()
+  },[])
+
+  const deleteBanner = async (uid) => {
+    alert(uid)
+    try {
+      const response = await axios.delete(`${backend_API}/banner/deleteBanner`,
+        { data: { bannerId: uid } },
+        {
+
+          headers: {
+            'Content-Type': 'application/json',
+          }
+
+        })
+      if (response.status === 200) {
+        console.log(response.data)
+        alert(response.data.message)
+        GetBanners()
+      }
+    } catch (error) {
+      console.error(error)
+      console.log(error.response.data.message);
+      alert(error.response.data.message)
+    } finally {
+      setLoding(false)
+    }
+  }
 
   return (
     <>
@@ -31,15 +87,18 @@ const Banner = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.length > 0 ? (
-                    users.map((user, index) => (
-                      <tr key={user.id}>
+                  {banners.length > 0 ? (
+                    banners.map((banner, index) => (
+                      <tr key={banner.id}>
                         <td>{index + 1}</td>
-                        <td>{user.name}</td>
-                        <td>{user.image}</td>
+                        <td>{banner.title}</td>
                         <td>
-                          <button className="btn btn-primary m-1">Edit</button>
-                          <button className="btn btn-danger m-1">Delete</button>
+                          <img src={banner.imageUrl} alt="banner" style={{ width: "100px",
+                          height: "100px"}}/>
+                        </td>
+                        <td>
+                          <button className="btn btn-primary m-1" onClick={() => navigate(`/admin/editBanner`,{state : banner})}>Edit</button>
+                          <button className="btn btn-danger m-1" onClick={() => deleteBanner(banner._id)}>Delete</button>
                         </td>
 
                       </tr>

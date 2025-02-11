@@ -15,6 +15,7 @@ import CreateUser from './AdminComponents/Users/CreateUser'
 import EditUser from './AdminComponents/Users/EditUser'
 import AddBanner from './AdminComponents/Banner/AddBanner'
 import { AuthProvider } from './contex/AuthContext'
+import EditBanner from './AdminComponents/Banner/EditBanner'
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
     <Route path="/admin/editUser" element={<EditUser />} />
     <Route path="/admin/banner" element={<Banner />} />
     <Route path="/admin/addBanner" element={<AddBanner />} />
+    <Route path="/admin/editBanner" element={<EditBanner />} />
 
   
   </Routes>

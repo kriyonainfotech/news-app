@@ -1,19 +1,51 @@
 import React, { useState } from "react";
 import Header from "../header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const backend_API = import.meta.env.VITE_API_URL;
 
 const AddBanner = () => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
 
+  const navigate = useNavigate();
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Title:", title);
-    console.log("Selected Image:", image);
+
+    if (!title || !image) {
+      alert("Please provide a title and select an image.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("banner", image); // 'banner' should match the multer field name
+
+    try {
+      const response = await axios.post(`${backend_API}/banner/addBanner`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data.success) {
+        alert("Banner added successfully!");
+        setTitle("");
+        setImage(null);
+        navigate("/admin/banner")
+      } else {
+        alert("Failed to add banner. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error adding banner:", error);
+      alert("An error occurred while adding the banner.");
+    }
   };
 
   return (
@@ -28,7 +60,6 @@ const AddBanner = () => {
               </div>
               <div className="card-body p-4">
                 <form onSubmit={handleSubmit}>
-                  {/* Title Input */}
                   <div className="mb-3">
                     <label htmlFor="title" className="form-label fw-bold">
                       Banner Title
@@ -44,7 +75,6 @@ const AddBanner = () => {
                     />
                   </div>
 
-                  {/* File Input */}
                   <div className="mb-3">
                     <label htmlFor="image" className="form-label fw-bold">
                       Upload Image
@@ -59,14 +89,12 @@ const AddBanner = () => {
                     />
                   </div>
 
-                  {/* Submit Button */}
                   <button type="submit" className="btn bg-red text-white w-100">
                     Submit Banner
                   </button>
                 </form>
               </div>
             </div>
-            {/* Preview Image */}
             {image && (
               <div className="mt-4 text-center">
                 <h5 className="fw-bold">Image Preview</h5>
