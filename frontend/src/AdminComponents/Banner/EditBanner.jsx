@@ -46,7 +46,6 @@ const EditBanner = () => {
       });
 
         if (response.status === 200) {
-              alert("Banner added successfully!");
               toast(response.data.message)
               setTitle("");
               setImage(null);

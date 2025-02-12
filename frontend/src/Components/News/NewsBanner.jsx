@@ -37,7 +37,7 @@ const NewsBanner = () => {
 
   // Slider settings (Show 3 slides at a time)
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 3, // Show 3 slides at a time

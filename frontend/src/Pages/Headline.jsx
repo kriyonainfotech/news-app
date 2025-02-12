@@ -1,111 +1,101 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../Components/header/Header'
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
-const API_KEY = import.meta.env.VITE_EXPO_PUBLIC_API_KEY;
+const API_KEYS = Object.keys(import.meta.env)
+    .filter((key) => key.startsWith("VITE_API_KEY_"))
+    .map((key) => import.meta.env[key]);
+
 
 const Headline = () => {
+    const [allNews, setAllNews] = useState([])
+    const [search, setSearch] = useState("india")
+    const [loading, setLoading] = useState(false)
+    const navigate  = useNavigate()
 
-    const [headline, setHeadline] = useState([]);
-    const [loading, setLoading] = useState(true); // Loading state
-    const [error, setError] = useState(""); // Error state
-    const navigate = useNavigate()
+ const [apiKeyIndex, setApiKeyIndex] = useState(0); // Track API key usage
+     useEffect(() => {
+          fetchNews(apiKeyIndex);
+      }, [apiKeyIndex]);
+      const fetchNews = async (index) => {
+        if (index >= API_KEYS.length) {
+            console.error("All API keys have failed.");
+            setLoading(false);
+            return;
+        }
 
-    const FetchNews = async () => {
-
-        setLoading(true);
-        setError(""); // Reset error before fetching
         try {
-
-            let apiUrl = `https://newsdata.io/api/1/latest?apikey=${API_KEY}&country=in&language=en&removeduplicate=1`
-
+            let apiUrl = `https://newsdata.io/api/1/latest?apikey=${API_KEYS[index]}&country=in&language=en&&category=entertainment&image=1`;
             const response = await fetch(apiUrl);
             const data = await response.json();
-            console.log(data, "data headline page");
-            if (data.status == "error") {
-                setError(data.results.message)
-            }
-            if (!data.results || data.results.length === 0) {
-                throw new setErrorError("No news found for this category or search query.");
-            }
 
-            const filteredData = data.results.filter(item => item.image_url !== null && item.description); // Filter by image & description
-            setHeadline(filteredData);
+            if (data.status === "error") {
+                console.warn(`API Key ${API_KEYS[index]} failed, trying next...`);
+                setApiKeyIndex(index + 1); // Switch to next API key
+
+            } else {
+                const filteredNews = data.results.filter(item => item.image_url !== null);
+                setAllNews(filteredNews);
+                setLoading(false);
+            }
         } catch (error) {
-            console.error("API Error:", error);
-            // setError(error.message); // Set error message
+            console.error("Error fetching news:", error);
+            setApiKeyIndex(index + 1); // Try next API key on network error
         }
-        setLoading(false);
     };
 
-    // Debounce Logic
-    useEffect(() => {
-        const delayDebounce = setTimeout(() => {
-            FetchNews();
-        }, 2000);
-
-        return () => clearTimeout(delayDebounce);
-    }, []);
-
     return (
-        <div>
-            <Header />
-            <div style={{ marginTop: "100px" }}>
+        <>
 
-                <div className="container">
-                    <div className="row">
-                        <button className=" d-flex justify-content-start border-0 bg-white pb-3 text-black" onClick={() => window.history.back()}>
-                            <FaArrowLeft />
-                        </button>
-                        <div>
-                            <h5>Headline</h5>
-                        </div>
-                        <div className="col-12 d-flex flex-wrap">
-                            {
-                                headline.map((item, index) => {
-                                    return (
-                                        <div key={index} className="col-12 col-md-3 m-1 d-flex flex-md-column border border-1 rounded-2">
-                                            <div className="col-4 col-md-12 d-flex align-items-center justify-content-center">
-                                                <div className="img p-2 w-auto rounded-3 overflow-hidden d-flex align-items-center justify-content-center" style={{ width: "120px", height: "150px" }}>
-                                                    <img src={item.image_url} className='w-auto h-100 rounded-2 img-fluid ' style={{ objectFit: "cover" }} alt="" />
-                                                </div>
-                                            </div>
-                                            <div className="col-8 col-md-12">
-                                                <div className="content p-2">
-                                                    <span className='d-flex justify-content-end'>20-2-2025</span>
-                                                    <h6 className='heading'>{item.title}</h6>
-                                                    <p className='heading'>{item.description}</p>
-                                                    <div>
-                                                        <button onClick={() => navigate(`/news/${item.article_id}`)} className="btn bg-red text-white p-1">Read More</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                })
-                            }
-                            <div className="col-12 col-md-4 d-flex flex-md-column border border-1 rounded-2">
-                                <div className="col-4 col-md-12 d-flex align-items-center justify-content-center">
-                                    <div className="img p-2 w-auto rounded-3 overflow-hidden d-flex align-items-center justify-content-center" style={{ width: "120px", height: "150px" }}>
-                                        <img src="https://a57.foxnews.com/cf-images.us-east-1.prod.boltdns.net/v1/static/694940094001/99f994dc-40f5-4746-ba5b-1c6d6dc115b8/2b160948-58f7-4b70-b85f-9cedce88cb78/1280x720/match/896/500/image.jpg?ve=1&tl=1" className='w-auto h-100 rounded-2 img-fluid ' style={{ objectFit: "cover" }} alt="" />
-                                    </div>
+<section className="py-5 bg-light">
+            <div className="container">
+                {/* Section Heading */}
+                <div className="d-flex align-items-center justify-content-between pb-3">
+                    <h2 className="ps-3 fs-3 fw-bold text-danger">Entertainment</h2>
+                </div>
+
+                {/* News Cards */}
+                <div className="row">
+                    {allNews.map((news, index) => (
+                        <div key={index} className="col-lg-6 col-md-6 col-sm-12 mb-4">
+                            <div className="card bg-light border-0 shadow-sm h-100 overflow-hidden d-flex flex-row">
+                                {/* Image Section */}
+                                <div className="position-relative flex-shrink-0" style={{ width: "40%", minHeight: "150px" }}>
+                                    <img 
+                                        src={news.image_url || news.urlToImage} 
+                                        className="card-img-top h-100 w-100"
+                                        alt="News" 
+                                        style={{ objectFit: "cover", borderRadius: "5px 0 0 5px" }} 
+                                    />
+                                  
                                 </div>
-                                <div className="col-8 col-md-12">
-                                    <div className="content p-2">
-                                        <span className='d-flex justify-content-end'>20-2-2025</span>
-                                        <h6 className='heading'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, quam.</h6>
-                                        <p className='heading'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad consectetur quis maxime id totam eligendi fugiat, amet minima vel excepturi. Laudantium ducimus, quae ad expedita alias eaque quos possimus dolor.</p>
-                                        <div>
-                                            <button className="btn bg-red text-white p-1">Read More</button>
-                                        </div>
+
+                                {/* Card Body */}
+                                <div className="card-body d-flex flex-column">
+                                    <span className="text-muted small">{news.pubDate || news.publishedAt}</span>
+                                    <h6 className="card-title mt-2 fw-bold text-dark">
+                                        {news.title.length > 30 ? news.title.slice(0, 30) + "..." : news.title}
+                                    </h6>
+                                    <p className="card-text text-muted d-none d-md-block">
+                                        {news?.description?.length > 100 ? news?.description.slice(0, 100) + "..." : news.description}
+                                    </p>
+
+                                    {/* Read More Button */}
+                                    <div className="mt-auto">
+                                        <button 
+                                            className="btn btn-sm btn-danger w-100 fw-bold" 
+                                            onClick={() => navigate(`/news/${news.article_id}`)}
+                                        >
+                                            Read More →
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    ))}
                 </div>
             </div>
-        </div>
+        </section>
+
+        </>
     )
 }
 

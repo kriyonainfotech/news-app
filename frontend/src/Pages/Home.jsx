@@ -5,6 +5,9 @@ import NewsCategory from '../Components/News/NewsCategory';
 import Loading from '../Components/Loading';
 import Footer from '../Components/footer/Footer';
 import NewsBanner from '../Components/News/NewsBanner';
+import Cards from '../Components/News/Cards';
+import Newsleter from './Newsleter';
+import Headline from './Headline';
 
 // Dynamically fetch API keys from .env
 const API_KEYS = Object.keys(import.meta.env)
@@ -124,6 +127,9 @@ const Home = () => {
 
                     {/* Show News Only If No Error & No Loading */}
                     {!loading && !error && <BreackingNews allNews={allNews} />}
+                    <Cards/>
+                    <Newsleter/>
+                    <Headline/>
                 </div>
                 <Footer />
             </div>

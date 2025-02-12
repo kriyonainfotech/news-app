@@ -1,72 +1,98 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+const API_KEYS = Object.keys(import.meta.env)
+    .filter((key) => key.startsWith("VITE_API_KEY_"))
+    .map((key) => import.meta.env[key]);
+
 
 const Cards = () => {
     const [allNews, setAllNews] = useState([])
     const [search, setSearch] = useState("india")
+    const [loading, setLoading] = useState(false)
+    const navigate  = useNavigate()
+ const [apiKeyIndex, setApiKeyIndex] = useState(0); // Track API key usage
+     useEffect(() => {
+          fetchNews(apiKeyIndex);
+      }, [apiKeyIndex]);
+      const fetchNews = async (index) => {
+        if (index >= API_KEYS.length) {
+            console.error("All API keys have failed.");
+            setLoading(false);
+            return;
+        }
 
-    const FetchNews = async () => {
         try {
-            const response = await fetch(`https://newsdata.io/api/1/latest?apikey=pub_68284ccc3e5ecbae8e43af659598b5b277d89&country=in&language=en&q=${search}`);
-           const data = await response.json();
-            console.log(data, "data");
+            let apiUrl = `https://newsdata.io/api/1/latest?apikey=${API_KEYS[index]}&country=in&language=en&&category=business&image=1`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
 
-            const alldata = data.results.filter(item => item.image_url !== null);
-            setAllNews(alldata);
+            if (data.status === "error") {
+                console.warn(`API Key ${API_KEYS[index]} failed, trying next...`);
+                setApiKeyIndex(index + 1); // Switch to next API key
+
+            } else {
+                const filteredNews = data.results.filter(item => item.image_url !== null);
+                setAllNews(filteredNews);
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error("Error fetching news:", error);
+            setApiKeyIndex(index + 1); // Try next API key on network error
         }
-        catch (error) {
-            console.error(error);
-        }
+    };
 
-
-    }
-    useEffect(() => {
-        FetchNews();
-    }, [])
     return (
         <>
 
-            <section>
-                <div className="container">
-                    <div className="row">
-                        <div className='d-flex align-items-center justify-content-between py-4'>
-                            <h1 className=' ps-3 fs-3'>Letest</h1>
-
-                        </div>
-
-                        <div className="col-12 d-flex flex-wrap">
-                            {
-                                allNews.map((news, index) => {
-                                    return (
-                                        <div key={index} className="col-md-3 p-2">
-                                        <div className="card h-100">
-                                            {/* Image Section */}
-                                            <div className="img" style={{ height: "200px" }}>
-                                                <img src={news.urlToImage || news.image_url} className="card-img-top w-100 h-100" alt="..." />
-                                            </div>
-
-                                            {/* Card Body with Flexbox */}
-                                            <div className="card-body d-flex flex-column">
-                                                <h5 className="card-title heading">{news.title || news.name}</h5>
-                                                <p className="card-text text">{news.description}</p>
-                                                <p className="card-text">{news.publishedAt}</p>
-
-                                                {/* Push the button to the bottom */}
-                                                <div className="mt-auto">
-                                                    <a href={news.url} className="btn bg-danger text-white w-100">Read more</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    )
-                                })
-                            }
-
-
-                        </div>
-                    </div>
+<section className="py-5 ">
+            <div className="container">
+                {/* Section Heading */}
+                <div className="d-flex align-items-center justify-content-between pb-3">
+                    <h2 className="ps-3 fs-3 fw-bold text-danger">Bussiness</h2>
                 </div>
-            </section>
+
+                {/* News Cards */}
+                <div className="row">
+                    {allNews.map((news, index) => (
+                        <div key={index} className="col-lg-6 col-md-6 col-sm-12 mb-4">
+                            <div className="card bg-light border-0 shadow-sm h-100 overflow-hidden d-flex flex-row">
+                                {/* Image Section */}
+                                <div className="position-relative flex-shrink-0" style={{ width: "40%", minHeight: "150px" }}>
+                                    <img 
+                                        src={news.image_url || news.urlToImage} 
+                                        className="card-img-top h-100 w-100"
+                                        alt="News" 
+                                        style={{ objectFit: "cover", borderRadius: "5px 0 0 5px" }} 
+                                    />
+                                  
+                                </div>
+
+                                {/* Card Body */}
+                                <div className="card-body d-flex flex-column">
+                                    <span className="text-muted small">{news.pubDate || news.publishedAt}</span>
+                                    <h6 className="card-title mt-2 fw-bold text-dark">
+                                        {news.title.length > 30 ? news.title.slice(0, 30) + "..." : news.title}
+                                    </h6>
+                                    <p className="card-text text-muted d-none d-md-block">
+                                        {news?.description?.length > 100 ? news?.description.slice(0, 100) + "..." : news.description}
+                                    </p>
+
+                                    {/* Read More Button */}
+                                    <div className="mt-auto">
+                                        <button 
+                                            className="btn btn-sm btn-danger w-100 fw-bold" 
+                                            onClick={() => navigate(`/news/${news.article_id}`)}
+                                        >
+                                            Read More →
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
 
         </>
     )

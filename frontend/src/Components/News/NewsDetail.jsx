@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Header from "../header/Header";
 import { FaArrowLeft } from "react-icons/fa";
 import Footer from "../footer/Footer";
+import Loading from "../Loading";
 
 const API_KEYS = [
   import.meta.env.VITE_API_KEY_1,
@@ -41,7 +42,7 @@ const NewsDetail = () => {
     }
   };
 
-  if (!newsData) return <h2>Loading...</h2>;
+  if (!newsData) return <Loading/>;
 
   return (
     <>
