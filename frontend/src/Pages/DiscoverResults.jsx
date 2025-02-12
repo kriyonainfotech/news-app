@@ -3,12 +3,12 @@ import { useLocation } from 'react-router-dom';
 import Header from '../Components/header/Header';
 import { FaArrowLeft } from 'react-icons/fa';
 import Footer from '../Components/footer/Footer';
+import Loading from '../Components/Loading';
 
-const API_KEYS = [
-    import.meta.env.VITE_API_KEY_1,
-    import.meta.env.VITE_API_KEY_2,
-    import.meta.env.VITE_API_KEY_3,
-];
+const API_KEYS = Object.keys(import.meta.env)
+    .filter((key) => key.startsWith("VITE_API_KEY_"))
+    .map((key) => import.meta.env[key]);
+
 
 const DiscoverResults = () => {
     const location = useLocation();
@@ -44,6 +44,7 @@ const DiscoverResults = () => {
             if (data.status === "error") {
                 console.warn(`API Key ${API_KEYS[index]} failed, trying next...`);
                 setApiKeyIndex(index + 1); // Switch to next API key
+
             } else {
                 const filteredNews = data.results.filter(item => item.image_url !== null);
                 setNews(filteredNews);
@@ -64,36 +65,39 @@ const DiscoverResults = () => {
                 </button>
                 <h2>News </h2>
                 <div className="row">
-                    {news.map((news, index) => (
-                        <div key={index} className="col-md-3 p-2">
-                            <div className="card h-100">
-                                {/* Image Section */}
-                                <div className="img" style={{ height: "200px" }}>
-                                    <img src={news.image_url || news.urlToImage} className="card-img-top w-100 h-100" alt="News" />
-                                </div>
+                    {loading && <Loading />}
 
-                                {/* Card Body with Flexbox */}
-                                <div className="card-body d-flex flex-column">
-                                    <h5 className="card-title heading">{news.title}</h5>
-                                    <p className="card-text text">{news.description}</p>
-                                    <p className="card-text">{news.publishedAt}</p>
+                    {!loading && 
+                        news.map((news, index) => (
+                            <div key={index} className="col-md-3 p-2">
+                                <div className="card h-100">
+                                    {/* Image Section */}
+                                    <div className="img" style={{ height: "200px" }}>
+                                        <img src={news.image_url || news.urlToImage} className="card-img-top w-100 h-100" alt="News" />
+                                    </div>
 
-                                    {/* Redirect to News Detail Page */}
-                                    <div className="mt-auto">
-                                        <button
-                                            className="btn bg-danger text-white w-100"
-                                            onClick={() => navigate(`/news/${news.article_id}`)}
-                                        >
-                                            Read More
-                                        </button>
+                                    {/* Card Body with Flexbox */}
+                                    <div className="card-body d-flex flex-column">
+                                        <h5 className="card-title heading">{news.title}</h5>
+                                        <p className="card-text text">{news.description}</p>
+                                        <p className="card-text">{news.publishedAt}</p>
+
+                                        {/* Redirect to News Detail Page */}
+                                        <div className="mt-auto">
+                                            <button
+                                                className="btn bg-danger text-white w-100"
+                                                onClick={() => navigate(`/news/${news.article_id}`)}
+                                            >
+                                                Read More
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 };

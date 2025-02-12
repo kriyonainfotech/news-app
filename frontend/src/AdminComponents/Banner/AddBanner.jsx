@@ -3,6 +3,7 @@ import Header from "../header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const backend_API = import.meta.env.VITE_API_URL;
 
@@ -34,17 +35,17 @@ const AddBanner = () => {
         },
       });
 
-      if (response.data.success) {
+      if (response.status === 200) {
         alert("Banner added successfully!");
+        toast(response.data.message)
         setTitle("");
         setImage(null);
         navigate("/admin/banner")
-      } else {
-        alert("Failed to add banner. Please try again.");
       }
     } catch (error) {
-      console.error("Error adding banner:", error);
-      alert("An error occurred while adding the banner.");
+      console.error(error)
+      console.log(error.response.data.message);
+      toast(error.response.data.message)
     }
   };
 

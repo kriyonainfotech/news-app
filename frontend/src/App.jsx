@@ -4,6 +4,7 @@ import Home from './Pages/Home'
 import Register from './Components/Register'
 import Login from './Components/Login'
 import NewsDetail from './Components/News/NewsDetail'
+import { ToastContainer } from 'react-toastify';
 import Discover from './Pages/Discover'
 import DiscoverResults from './Pages/DiscoverResults'
 import Newsleter from './Pages/Newsleter'
@@ -25,6 +26,7 @@ const App = () => {
   return (
    <>
    <AuthProvider>
+   <ToastContainer />
   <Routes>
   
           <Route path="/signUp" element={<Register />} />

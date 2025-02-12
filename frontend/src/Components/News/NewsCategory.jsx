@@ -10,7 +10,7 @@ const NewsCategory = ({ setCategory, setLatest }) => {
     return (
         <>
             <section>
-                <div className="container">
+                <div className="container pb-5">
                     <div className="row">
                         <div className="col-12">
                             <div className="category-slider">

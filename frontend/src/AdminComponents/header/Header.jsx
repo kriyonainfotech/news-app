@@ -24,26 +24,26 @@ const Header = () => {
   return (
     <>
       <div className=''>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top shadow px-2">
-        <div className="container-fluid">
-          <div className="col-12 d-flex align-items-center">
-          <button 
-            className="btn d-flex" 
-            type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" 
-          >
-            <FaBars />
-          </button>
-            {/* Logo */}
-          <div className="logo">
-            <Link to={"/"}>
-            <h3 className="text-red">Gujrat News</h3>
-            </Link>
-          </div>
-          </div>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top shadow px-2">
+          <div className="container-fluid">
+            <div className="col-12 d-flex align-items-center">
+              <button
+                className="btn d-flex"
+                type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"
+              >
+                <FaBars />
+              </button>
+              {/* Logo */}
+              <div className="logo">
+                <Link to={"/"}>
+                  <h3 className="text-red">Gujrat News</h3>
+                </Link>
+              </div>
+            </div>
 
-         
-        </div>
-      </nav>
+
+          </div>
+        </nav>
 
       </div>
       {/* nave bottom  */}
@@ -69,27 +69,35 @@ const Header = () => {
           </div>
         </div>
       </nav>
-      <div className="offcanvas offcanvas-start" style={{width :"250px"}} data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-  <div className="offcanvas-header">
-    <h3 className="offcanvas-title text-red" id="offcanvasScrollingLabel">Gujrat News</h3>
-    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div className="offcanvas-body">
-        <div className="manu-sidebar">
-            <ul className="list-group list-group-flush p-1">
-                <li className='p-1'>
-                    <Link to={"/admin"} className="text-red fs-5">Dashboard</Link>
-                </li>
-                <li className='p-1'>
-                    <Link to={"/admin/users"} className="text-red fs-5">Uses</Link>
-                </li>
-                <li className='p-1'>
-                    <Link to={"/admin/banner"} className="text-red fs-5">Manage Banner</Link>
-                </li>
-            </ul>
+      <div className="offcanvas offcanvas-start" style={{ width: "250px" }} data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div className="offcanvas-header">
+          <h3 className="offcanvas-title text-red" id="offcanvasScrollingLabel">Gujrat News</h3>
+          <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-  </div>
-</div>
+        <div className="offcanvas-body">
+          <div className="manu-sidebar">
+            <ul className="list-group list-group-flush">
+              <Link to={"/admin"} className="text-red fs-5 w-100 p-1">
+                <li className='w-100 p-1'>
+                  Dashboard
+                  </li>
+              </Link>
+              <Link to={"/admin/users"} className="text-red fs-5 w-100 p-1">
+                <li className='w-100 p-1'>
+                Users
+                  </li>
+              </Link>
+              <Link to={"/admin/banner"} className="text-red fs-5 w-100 p-1">
+                <li className='w-100 p-1'>
+                Manage Banner
+                  </li>
+              </Link>
+            
+            
+          </ul>
+        </div>
+      </div>
+    </div >
     </>
   )
 }

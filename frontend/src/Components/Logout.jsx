@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
 const backend_API = import.meta.env.VITE_API_URL;
 
 const Logout = () => {
@@ -15,12 +16,14 @@ const Logout = () => {
             if (response.status === 200) {
                 // toast(response.data.message || "Logout Successful...");
                 console.log(response.data.message);
-                alert(response.data.message)
+                toast(response.data.message)
+                
+                // alert(response.data.message)
                 navigate('/signin');
             }
         } catch (error) {
             console.error("Error during logout:", error);
-            //   toast.error(error?.response?.data?.message ||"Logout failed. Please try again.");
+              toast.error(error?.response?.data?.message ||"Logout failed. Please try again.");
         }
     };
     return (

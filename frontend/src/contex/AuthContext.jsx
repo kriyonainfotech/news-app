@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 
                 if (response.status === 200) {
                     setUser(response.data.user); // Set user data
-                    console.log("Fetched user data:", response.data, user);
+                    console.log("Fetched user datas:", response.data.user);
                 }
             } catch (err) {
                 console.error("Error fetching user:", err);

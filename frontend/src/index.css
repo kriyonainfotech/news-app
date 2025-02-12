@@ -103,7 +103,7 @@ body {
   background-color:var(--bg-primary);
 }
 
-.manu-sidebar ul li:hover a {
+.manu-sidebar ul a:hover  {
   color: white !important;
 }
 

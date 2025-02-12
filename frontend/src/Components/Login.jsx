@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { toast } from "react-toastify";
 const backend_API = import.meta.env.VITE_API_URL;
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -39,7 +40,8 @@ const Login = () => {
       if (response.status === 200) {
         console.log(response.data)
         console.log(response.data.message)
-        alert(response.data.message)
+        toast(response.data.message)
+        
         // localStorage.setItem("token",JSON.stringify(response.data.token)
         navigate('/')
         window.location.reload()
@@ -47,7 +49,7 @@ const Login = () => {
     } catch (error) {
       console.error(error)
       console.log(error.response.data.message);
-      alert(error.response.data.message)
+      toast(error.response.data.message)
     } finally {
       setLoding(false)
     }

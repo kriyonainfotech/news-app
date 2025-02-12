@@ -16,6 +16,7 @@ let requestCounts = Array(API_KEYS.length).fill(0); // Track requests per key
 const MAX_REQUESTS = 200; // Max 200 requests per key
 
 const Home = () => {
+  
     const [allNews, setAllNews] = useState([]);
     const [category, setCategory] = useState("top");
     const [searchQuery, setSearchQuery] = useState("");

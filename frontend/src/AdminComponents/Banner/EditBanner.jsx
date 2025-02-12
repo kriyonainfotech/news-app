@@ -3,6 +3,7 @@ import Header from "../header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const backend_API = import.meta.env.VITE_API_URL;
 
@@ -44,19 +45,18 @@ const EditBanner = () => {
         },
       });
 
-      if (response.data.success) {
-        alert("Banner updated successfully!");
-        setTitle("");
-        setImage(null);
-        setPreviewImage(null);
-        navigate("/admin/banner");
-      } else {
-        alert("Failed to update banner. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error updating banner:", error);
-      alert("An error occurred while updating the banner.");
-    }
+        if (response.status === 200) {
+              alert("Banner added successfully!");
+              toast(response.data.message)
+              setTitle("");
+              setImage(null);
+              navigate("/admin/banner")
+            }
+          } catch (error) {
+            console.error(error)
+            console.log(error.response.data.message);
+            toast(error.response.data.message)
+          }
   };
 
   useEffect(() => {

@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Header from '../AdminComponents/header/Header'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { FiDelete } from 'react-icons/fi';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import Loading from '../Components/Loading';
 
 const backend_API = import.meta.env.VITE_API_URL;
 const Banner = () => {
@@ -9,11 +13,6 @@ const Banner = () => {
     const [loading, setLoding] = useState(false);
   
   const navigate = useNavigate()
-
-  const users = [
-    { id: 1, name: "Banner Name", image: "banner Image" },
-
-  ];
 
   const GetBanners = async() => {
     setLoding(true);
@@ -30,7 +29,7 @@ const Banner = () => {
     } catch (error) {
       console.error(error)
       console.log(error.response.data.message);
-      alert(error.response.data.message)
+      toast(error.response.data.message)
     } finally {
       setLoding(false)
     }
@@ -40,7 +39,7 @@ const Banner = () => {
   },[])
 
   const deleteBanner = async (uid) => {
-    alert(uid)
+    // alert(uid)
     try {
       const response = await axios.delete(`${backend_API}/banner/deleteBanner`,
         { data: { bannerId: uid } },
@@ -53,13 +52,13 @@ const Banner = () => {
         })
       if (response.status === 200) {
         console.log(response.data)
-        alert(response.data.message)
+        toast(response.data.message)
         GetBanners()
       }
     } catch (error) {
       console.error(error)
       console.log(error.response.data.message);
-      alert(error.response.data.message)
+      toast(error.response.data.message)
     } finally {
       setLoding(false)
     }
@@ -76,7 +75,8 @@ const Banner = () => {
               <Link to={"/admin/addBanner"} className='btn  bg-info text-white'>Add Banner</Link>
             </div>
             <div className="card-body">
-              <table className="table table-hover table-bordered">
+            <div className="table-responsive">
+            <table className="table table-hover table-bordered">
                 <thead className="table">
                   <tr>
                     <th>#</th>
@@ -87,18 +87,21 @@ const Banner = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {banners.length > 0 ? (
+                  {/* Show Loading While Fetching */}
+                  {loading && <Loading />}
+
+                  {!loading && banners.length > 0 ? (
                     banners.map((banner, index) => (
                       <tr key={banner.id}>
                         <td>{index + 1}</td>
                         <td>{banner.title}</td>
                         <td>
-                          <img src={banner.imageUrl} alt="banner" style={{ width: "50%",
-                          height: "100%"}}/>
+                          <img src={banner.imageUrl} alt="banner" style={{ width: "500px",
+                          height: "100px"}}/>
                         </td>
                         <td>
-                          <button className="btn btn-primary m-1" onClick={() => navigate(`/admin/editBanner`,{state : banner})}>Edit</button>
-                          <button className="btn btn-danger m-1" onClick={() => deleteBanner(banner._id)}>Delete</button>
+                          <button className="btn btn-primary p-0 p-2 m-1" onClick={() => navigate(`/admin/editBanner`,{state : banner})}><FaEdit size={20}/></button>
+                          <button className="btn btn-danger m-1" onClick={() => deleteBanner(banner._id)}><FaTrash/></button>
                         </td>
 
                       </tr>
@@ -112,6 +115,8 @@ const Banner = () => {
                   )}
                 </tbody>
               </table>
+            </div>
+             
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Header from "../header/Header";
+import { toast } from "react-toastify";
 const backend_API = import.meta.env.VITE_API_URL;
 const CreateUser = () => {
   const [formData, setFormData] = useState({
@@ -53,14 +54,14 @@ const CreateUser = () => {
       if (response.status === 200) {
         console.log(response.data)
         console.log(response.data.message)
-        alert(response.data.message)
+        toast(response.data.message)
         // localStorage.setItem("token",JSON.stringify(response.data.token))
         navigate('/admin/users')
       }
     } catch (error) {
       console.error(error)
       console.log(error.response.data.message);
-      alert(error.response.data.message)
+      toast(error.response.data.message)
     } finally {
       setLoding(false)
     }

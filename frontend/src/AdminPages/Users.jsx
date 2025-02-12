@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Header from '../AdminComponents/header/Header';
 import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import Loading from '../Components/Loading';
 const backend_API = import.meta.env.VITE_API_URL;
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -27,13 +29,13 @@ const Users = () => {
     } catch (error) {
       console.error(error)
       console.log(error.response.data.message);
-      alert(error.response.data.message)
+      toast(error.response.data.message)
     } finally {
       setLoding(false)
     }
   }
   const deleteUser = async (uid) => {
-    alert(id)
+    // alert(id)
     try {
       const response = await axios.delete(`${backend_API}/auth/deleteUser`,
         { data: { id: uid } },
@@ -46,13 +48,13 @@ const Users = () => {
         })
       if (response.status === 200) {
         console.log(response.data)
-        alert(response.data.message)
+        toast(response.data.message)
         GetUsers()
       }
     } catch (error) {
       console.error(error)
       console.log(error.response.data.message);
-      alert(error.response.data.message)
+      toast(error.response.data.message)
     } finally {
       setLoding(false)
     }
@@ -84,7 +86,9 @@ const Users = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.length > 0 ? (
+                {loading && <Loading />}
+
+                  {!loading && users.length > 0 ? (
                     users.map((user, index) => (
                       <tr key={++index}>
                         <td>{index + 1}</td>
