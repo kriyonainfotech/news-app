@@ -25,6 +25,7 @@ const BreackingNews = ({ allNews }) => {
 
                                             {/* Card Body with Flexbox */}
                                             <div className="card-body d-flex flex-column">
+                                                <span className="d-flex justify-content-end py-1">{news.pubDate}</span>
                                                 <h5 className="card-title heading">{news.title}</h5>
                                                 <p className="card-text text">{news.description}</p>
                                                 <p className="card-text">{news.publishedAt}</p>

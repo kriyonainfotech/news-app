@@ -4,6 +4,7 @@ import { AuthContext } from '../contex/AuthContext';
 import Header from '../Components/header/Header';
 import Footer from '../Components/footer/Footer';
 import Logout from '../Components/Logout';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
@@ -18,9 +19,17 @@ const Profile = () => {
                         <div className="col-12 col-md-12 ">
                             <div className='text-center'>
                                 <FaUserCircle size={90} className="text-red mb-3" />
-                                <h2 className="fw-bold">{user?.name}</h2>
+                                <h2 className="fw-bold">{user?.name}  {
+                                    user.role == "admin" ? ( 
+                                    <Link to={"/admin"} className='fs-6 text-red'><strong>Admin</strong></Link>
+                                ) : (
+                                    <></>
+                                 )
+                                }</h2>
                                 <p className="text-muted">{user?.email}</p>
                                 <p className="text-muted">+91{user?.phone}</p>
+                               
+                               
                             </div>
                         </div>
                         

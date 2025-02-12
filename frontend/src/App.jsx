@@ -18,6 +18,8 @@ import { AuthProvider } from './contex/AuthContext'
 import EditBanner from './AdminComponents/Banner/EditBanner'
 import Profile from './Pages/Profile'
 import PrivacyPolicy from './Pages/PrivacyPolicy'
+import ProtectedRoute from './Components/ProtectedRoute'
+import ProtectAdmin from './Components/ProtectAdmin'
 
 const App = () => {
   return (
@@ -33,10 +35,13 @@ const App = () => {
     <Route path="/news" element={<DiscoverResults />} />
     <Route path="/newsletter" element={<Newsleter />} />
     <Route path="/headline" element={<Headline />} />
-    <Route path="/profile" element={<Profile />} />
+     <Route element={<ProtectedRoute />}>
+     <Route path="/profile" element={<Profile />} />
+     </Route>
+   
     <Route path="/privecyPolicy" element={<PrivacyPolicy />} />
-
-    <Route path="/admin" element={<Dashboard />} />
+  <Route path="/admin" element={<ProtectAdmin><Dashboard /></ProtectAdmin>} />
+    {/* <Route path="/admin" element={<Dashboard />} /> */}
     <Route path="/admin/users" element={<Users />} />
     <Route path="/admin/createUser" element={<CreateUser />} />
     <Route path="/admin/editUser" element={<EditUser />} />

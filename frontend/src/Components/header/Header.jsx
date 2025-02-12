@@ -4,6 +4,7 @@ import { FiHome, FiSave, FiSearch, FiUser } from 'react-icons/fi';
 import { SlBriefcase, SlWallet } from 'react-icons/sl';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from "../../../public/newsl-logo.png"
+
 import { AiFillSave, AiOutlineSave } from 'react-icons/ai';
 import { AuthContext } from '../../contex/AuthContext';
 import ProfileMenu from './ProfileMenu';

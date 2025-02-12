@@ -1,4 +1,5 @@
 import { useState } from "react";
+import UserIcon from "../../../public/user_icon.png"
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 const backend_API = import.meta.env.VITE_API_URL;
@@ -32,7 +33,7 @@ const ProfileMenu = () => {
         style={{ width: "50px", height: "50px", cursor: "pointer" }}
       >
         <img
-          src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0="
+          src={UserIcon}
           className="img-fluid w-100 h-100 rounded-5"
           alt="Profile"
         />

@@ -93,8 +93,8 @@ const Banner = () => {
                         <td>{index + 1}</td>
                         <td>{banner.title}</td>
                         <td>
-                          <img src={banner.imageUrl} alt="banner" style={{ width: "100px",
-                          height: "100px"}}/>
+                          <img src={banner.imageUrl} alt="banner" style={{ width: "50%",
+                          height: "100%"}}/>
                         </td>
                         <td>
                           <button className="btn btn-primary m-1" onClick={() => navigate(`/admin/editBanner`,{state : banner})}>Edit</button>

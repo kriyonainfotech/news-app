@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 
                 if (response.status === 200) {
                     setToken(response.data.token); // Set user data
-                    console.log("Fetched user data:", response.data.token);
+                    // console.log("Fetched user data:", response.data.token);
                 }
             } catch (err) {
                 console.error("Error fetching user:", err);
