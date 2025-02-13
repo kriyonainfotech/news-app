@@ -19,7 +19,7 @@ const Footer = () => {
         <div className="row">
           {/* Website Name & Description */}
           <div className="col-md-4">
-            <h4 className="fw-bold text-red py-2">Gujarat News</h4>
+            <h4 className="fw-bold text-red py-2">News</h4>
             <p>Stay updated with the latest news from Gujarat and around the world.</p>
           </div>
 
@@ -73,8 +73,8 @@ const Footer = () => {
           {/* Contact Info */}
           <div className="col-md-4 mb-3">
             <h5 className="fw-bold">Contact Us</h5>
-            <p><i className="fas fa-phone-alt me-2"></i> +91 98765 43210</p>
-            <p><i className="fas fa-envelope me-2"></i> contact@gujaratnews.com</p>
+            <p><i className="fas fa-phone-alt me-2"></i> +91 1234567898</p>
+            <p><i className="fas fa-envelope me-2"></i> contact@news.com</p>
             <p><i className="fas fa-map-marker-alt me-2"></i> Ahmedabad, Gujarat, India</p>
             <Link to={"/privecyPolicy"}>Privacy Policy</Link>
               {/* Social Media Links */}
@@ -91,7 +91,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="text-center my-3">
-          <p className="mb-0">&copy; 2025 Gujarat News. All rights reserved.</p>
+          <p className="mb-0">&copy; 2025  News. All rights reserved.</p>
         </div>
       </div>
     </footer>

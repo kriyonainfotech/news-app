@@ -37,7 +37,7 @@ const Header = ({setLanguage}) => {
              {/* Logo */}
              <div className="logo">
               <Link to={"/"}>
-                <h3 className="text-red">Gujrat News</h3>
+                <h3 className="text-red">News</h3>
               </Link>
             </div>
        

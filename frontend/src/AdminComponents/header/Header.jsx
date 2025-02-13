@@ -36,7 +36,7 @@ const Header = () => {
               {/* Logo */}
               <div className="logo">
                 <Link to={"/"}>
-                  <h3 className="text-red">Gujrat News</h3>
+                  <h3 className="text-red">News</h3>
                 </Link>
               </div>
             </div>
@@ -71,7 +71,7 @@ const Header = () => {
       </nav>
       <div className="offcanvas offcanvas-start" style={{ width: "250px" }} data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div className="offcanvas-header">
-          <h3 className="offcanvas-title text-red" id="offcanvasScrollingLabel">Gujrat News</h3>
+          <h3 className="offcanvas-title text-red" id="offcanvasScrollingLabel">News</h3>
           <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div className="offcanvas-body">
